@@ -13,5 +13,5 @@ spec:
         cloudDNS:
           project: jetstack-maria
           serviceAccountSecretRef:
-            name: cloud-dns-credentials
-            key: key.json
+            name: venafi
+            key: api_token
