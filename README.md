@@ -11,6 +11,39 @@ gcloud beta container clusters create fleetops \
     --workload-pool=jetstack-maria.svc.id.goog
 ```
 
+## Create secret in Secret Manager 
+
+```sh
+gcloud secrets create $SECRET_NAME \                         
+    --replication-policy="automatic"
+```
+
+```sh
+gcloud secrets versions add cloud-dns-credentials --data-file=$FILE_NAME
+```
+
+## Grant access
+
+Bind the IAM service account to cert-manager service account
+
+```sh
+gcloud iam service-accounts add-iam-policy-binding \
+    --role roles/iam.workloadIdentityUser \
+    --member "serviceAccount:jetstack-maria.svc.id.goog[cert-manager/cert-manager]" \
+    fleetops@jetstack-maria.iam.gserviceaccount.com
+```
+
+
+Grant the IAM service account permission to access the secret
+
+To grant the service account permission to access the secret, run the following command:
+
+```sh
+gcloud secrets add-iam-policy-binding cloud-dns-credentials \
+    --member=serviceAccount:fleetops@jetstack-maria.iam.gserviceaccount.com \
+    --role=roles/secretmanager.secretAccessor
+```
+
 ## Deploy cert-manager
 
 Edit values.yaml
@@ -54,26 +87,4 @@ helm install \
 
 ```sh
 kubectl apply -f deploy/manifests/app-secrets.yaml
-```
-
-## Grant access
-
-Bind the IAM service account to cert-manager service account
-
-```sh
-gcloud iam service-accounts add-iam-policy-binding \
-    --role roles/iam.workloadIdentityUser \
-    --member "serviceAccount:jetstack-maria.svc.id.goog[cert-manager/cert-manager]" \
-    fleetops@jetstack-maria.iam.gserviceaccount.com
-```
-
-
-Grant the IAM service account permission to access the secret
-
-To grant the service account permission to access the secret, run the following command:
-
-```sh
-gcloud secrets add-iam-policy-binding cloudfare-key \
-    --member=serviceAccount:fleetops@jetstack-maria.iam.gserviceaccount.com \
-    --role=roles/secretmanager.secretAccessor
 ```

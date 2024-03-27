@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "jetstack-maria",
+  "private_key_id": "fd2dafebf4ba31ecb281c9e7ecba72d8d2184945",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvwIBADANBgkqhkiG9w0BAQEFAASCBKkwggSlAgEAAoIBAQChQOEVadqKFQQd\nfWoHUTs5zuOxQXv9j41MG5yi4BGOVMVhyC6IPdcus5PtMB8V981UfO7+fv5seFua\nDTZh59u8E+afUCHp1oWJzBwNXY9oeHrVfANnSgzvyHdwqYewXHFsqQPoZMTHfJ1U\nxqFZoUvFH0/r7XaRPvXMOi25lBVKk8hdQhWdW6AocLDKvfpOMiKwvSuoBZMj0xAl\nEw/COrAGkBAa2v86OPBCdLMAHCMhJaiNz1PCwYD+uJr/EehhPqPaoSLpBuPzArLw\nwy0xtdB1tKfCXF5qEY4pMkSTbIb2j+FGogn+6U4xmfywTI8kBSuVSz1yUHLKktTc\nmZyi0KYvAgMBAAECggEATrxfKxWEn+ejGsMiAnCnepKKmwJeiHCPjZnt4ZmG+Phr\naFNWZS/M4gDNOgNFKnTUzWwzRhC8Kjqaf53z79pGcI9HDIMUDBmzGpWPHPeSDnDF\niXgEMWr25h38NAaTOono2CWuwspxSvaN29cg8aLQXG/tlkVcn48edZnyuaqUutSm\nUXnvnpGmyI/ipUoqSLD1wxgU0MuPEmQNv/Ti0rxeZgbbOOB2L3zo4nIUJxIuPXgf\n0X29w/QY60Qbo7IFVf03Tif7m+63HpIK/EuUzLciILPzOZV/uCXNk/3Lm30IhYMl\nPwHI2yCBQEYFa17Xhi689awKdz4/GSKrzA5KPE1gAQKBgQDjgRjcXjNkkPUBT91a\n/QuRk3Pm/wGlcUlX8p2ePC3aOTA3n7sUcQ5zX7F2Po04xCZnvDegUp7UFdWBVouN\nggZ6DTp3L0C576WKMBkFvL2uaeoZ0M8zVjGwxPtfYqmlTpHy3gNAaXfXx+HqBIqg\nAbBKgAhV7gXU1MPwkP2IHfEhPwKBgQC1c3R6li/etcQLNu9YgpjBVoT7HgEdEuWf\nVUDw815csfC7TJE0Yt6EUKB/HWledkpIa/roKRSe1bX9LgwrtDDjkT8rLq74wT4b\nU22Z81Z6bm48K9mChT0AxOQ14lsrXSWGdJiUndD6wjyiqOhPmx0LzL3Ig7WzygSc\nwOethbVPEQKBgQCk5rstZ/5aY5OjOs9Yl1geUcHN6oK395BQ9iN3QWl+5rrjZp0E\nqRnvWKpZ6ecVAWBRCqVLSPelBJp4IFIQ5PFq4FHDd/WzkFft/QT2GqNmW5D621aE\ngHKODYmizvHmRzgU0QWMV6YtOs2ugVI1vmOY7IqeNmP1q67GnWGXmxRfowKBgQCE\nZUDJLYqyOvhXonbToz7oW0Peow728tHfB2rCJSFmC2P2ljChA78O1nG1LnWyuicL\nXtaNzWPBXXhTyuSQgwLlGRb5YC/FS+MQNziSi04/ORJwDyK/LI7NX9yQQKB7LJTz\n3WFzlw9j2JQ7r3kKlMiF0pdrlkbfb3kcE1k4cIZRsQKBgQDiWsgfkIJnNH+2V2ix\n+I6qyGOenL2OqMVgDmTCz7AHp22JmobPOWqcY+zjalSHM9YVMGQ2lLWdJJ/IXTOR\n/Tu+So28UgmuJukC0FCr5NF5ytlPmtzPAKACnCShcneJ3HCpwI/KntGGjZ05kzV4\niwUpO7DIgJnAGF2cUQCAYQKkPg==\n-----END PRIVATE KEY-----\n",
+  "client_email": "dns01-solver@jetstack-maria.iam.gserviceaccount.com",
+  "client_id": "102261960076326286285",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/dns01-solver%40jetstack-maria.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}

@@ -6,7 +6,7 @@ metadata:
 spec:
   secretName: fleetops-tls
   issuerRef:
-    name: cloudflare-cluster-issuer
+    name: cloud-dns-issuer
     kind: ClusterIssuer
   dnsNames:
   - maria-gcp.jetstacker.net

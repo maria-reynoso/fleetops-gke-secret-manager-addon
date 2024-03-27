@@ -1,0 +1,17 @@
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: cloud-dns-issuer
+spec:
+  acme:
+    email: maria.reynoso@jetstack.io
+    server: https://acme-staging-v02.api.letsencrypt.org/directory
+    privateKeySecretRef:
+      name: cloud-dns-issuer-account-key
+    solvers:
+    - dns01:
+        cloudDNS:
+          project: jetstack-maria
+          serviceAccountSecretRef:
+            name: cloud-dns-credentials
+            key: key.json

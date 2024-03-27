@@ -15,5 +15,5 @@ spec:
         cloudflare:
           email: ortega.reynoso@gmail.com
           apiTokenSecretRef:
-            name: fleet-secrets
-            key: api-key
+            name: cloudflare-api-token-secret
+            key: api-token
