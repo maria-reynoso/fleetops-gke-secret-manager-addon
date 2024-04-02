@@ -287,7 +287,7 @@ containerSecurityContext:
 
 # Additional volumes to add to the cert-manager controller pod.
 volumes:
-- name: cloud-dns-sa
+- name: venafi-api
   csi:
     driver: secrets-store-gke.csi.k8s.io
     readOnly: true
@@ -297,7 +297,7 @@ volumes:
 # Additional volume mounts to add to the cert-manager controller container.
 volumeMounts:
 - mountPath: "/var/secrets"
-  name: cloud-dns-sa
+  name: venafi-api
 
 # Optional additional annotations to add to the controller Deployment.
 # +docs:property
