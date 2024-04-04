@@ -1,0 +1,15 @@
+global:
+  resolve_timeout: 5m
+  http_config:
+    tls_config:
+      insecure_skip_verify: true
+route:
+  group_by: ['job']
+  group_wait: 30s
+  group_interval: 1m
+  repeat_interval: 2m
+  receiver: 'pagerduty'
+receivers:
+- name: 'pagerduty'
+  pagerduty_configs:
+  - routing_key: 'R03E1UDKLXRGYTODCG9S77RRMB41J56F'

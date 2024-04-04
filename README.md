@@ -18,13 +18,13 @@ gcloud beta container clusters create fleetops \
 ## Create secret in Secret Manager 
 
 ```sh
-SECRET_NAME="venafi-api"
+SECRET_NAME="alertmanager-config"
 gcloud secrets create $SECRET_NAME \
     --replication-policy="automatic"
 ```
 
 ```sh
-FILE_NAME="api_key"
+FILE_NAME="alertmanager/alertmanager-config.yaml"
 gcloud secrets versions add $SECRET_NAME --data-file=$FILE_NAME
 ```
 
@@ -42,10 +42,10 @@ gcloud secrets add-iam-policy-binding $SECRET_NAME \
 
 ## Create SecretProviderClass
 
-Create cert-manager namespace
+Create monitoring namespace
 
 ```sh
-kubectl create ns cert-manager
+kubectl create namespace monitoring
 ```
 
 Deploy `SecretProviderClass`:
@@ -54,60 +54,19 @@ Deploy `SecretProviderClass`:
 kubectl apply -f deploy/manifests/app-secrets.yaml
 ```
 
-## Deploy cert-manager
-
-Edit values.yaml
-
-```yaml
-...
-serviceAccount:
-  # Specifies whether a service account should be created.
-  create: true
-  # Workload identity
-  annotations:
-    iam.gke.io/gcp-service-account: fleetops@jetstack-maria.iam.gserviceaccount.com
-...
-# Additional volumes to add to the cert-manager controller pod.
-volumes:
-- name: cloudflare-api
-  csi:
-    driver: secrets-store-gke.csi.k8s.io
-    readOnly: true
-    volumeAttributes:
-      secretProviderClass: fleet-secrets
-
-# Additional volume mounts to add to the cert-manager controller container.
-volumeMounts:
-- mountPath: "/var/secrets"
-  name: cloudflare-api
-...
-```
-
-Install cert-manager
-```sh
-helm install \
-  cert-manager jetstack/cert-manager \
-  --namespace cert-manager \
-  --create-namespace \
-  --version v1.14.4 \
-  -f deploy/values.yaml
-```
-
-Bind the IAM service account to cert-manager service account
+Create alertmanager service account Bind the IAM service account to alertmanager service account
 
 ```sh
+kubectl apply -f alertmanager/service-account.yaml
+
 gcloud iam service-accounts add-iam-policy-binding \
     --role roles/iam.workloadIdentityUser \
-    --member "serviceAccount:jetstack-maria.svc.id.goog[cert-manager/cert-manager]" \
+    --member "serviceAccount:jetstack-maria.svc.id.goog[monitoring/alertmanager-secret-sa]" \
     fleetops@jetstack-maria.iam.gserviceaccount.com
 ```
 
-Restart cert-manager controller:
+## Deploy Prometheus and Alertmanager
 
 ```sh
-kubectl delete pod -n cert-manager cert-manager-xxxx
+make deploy
 ```
-
-## Deploying certmanager Issuer
-
-Configure Venafi Issuer to obtain certificates from Venafi as a Service (VaaS) or Venafi Trust Protection Platform (TPP) instances.

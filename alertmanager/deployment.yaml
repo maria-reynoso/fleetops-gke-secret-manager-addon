@@ -1,0 +1,68 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: alertmanager
+  namespace: monitoring
+  labels:
+    k8s-app: alertmanager
+spec:
+  replicas: 2
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      k8s-app: alertmanager
+  template:
+    metadata:
+      labels:
+        k8s-app: alertmanager
+    spec:
+      serviceAccountName: alertmanager-secret-sa
+      containers:
+      - name: prometheus-alertmanager
+        image: prom/alertmanager
+        imagePullPolicy: Always
+        args:
+        - --config.file=/etc/config/alertmanager.yml
+        - --storage.path=/data
+        - --web.listen-address=:9093
+        - --web.route-prefix=/
+        - --log.level=debug
+        env:
+        - name: POD_IP
+          valueFrom:
+            fieldRef:
+              apiVersion: v1
+              fieldPath: status.podIP
+        ports:
+        - containerPort: 9093
+          name: http
+        - containerPort: 6783
+          name: mesh
+        readinessProbe:
+          httpGet:
+            path: /#/status
+            port: 9093
+          initialDelaySeconds: 30
+          timeoutSeconds: 30
+        volumeMounts:
+        - name: config
+          mountPath: /etc/config
+        - name: alertmanager-local-data
+          mountPath: "/data"
+          subPath: ""
+        resources:
+          limits:
+            cpu: 10m
+            memory: 50Mi
+          requests:
+            cpu: 10m
+            memory: 50Mi
+      volumes:
+      - name: config
+        csi:
+          driver: secrets-store-gke.csi.k8s.io
+          readOnly: true
+          volumeAttributes:
+            secretProviderClass: alertmanager-secrets
+      - name: alertmanager-local-data
+        emptyDir: {}
