@@ -8,11 +8,18 @@ Using Secret Manager addon for GKE
 ## Deploy cluster with secret manager addon enabled
 
 ```sh
-gcloud beta container clusters create fleetops \
+CLUSTER_NAME="fleetops"
+gcloud beta container clusters create $CLUSTER_NAME \
     --enable-secret-manager \
     --location=europe-west2-a \
     --cluster-version=1.29 \
     --workload-pool=jetstack-maria.svc.id.goog
+```
+
+Retrieve credentials:
+
+```sh
+gcloud container clusters get-credentials $CLUSTER_NAME
 ```
 
 ## Create secret in Secret Manager 
@@ -54,10 +61,10 @@ Deploy `SecretProviderClass`:
 kubectl apply -f deploy/manifests/app-secrets.yaml
 ```
 
-Create alertmanager service account Bind the IAM service account to alertmanager service account
+Create alertmanager service account and bind the IAM service account to the service account
 
 ```sh
-kubectl apply -f alertmanager/service-account.yaml
+kubectl apply -f service-account.yaml
 
 gcloud iam service-accounts add-iam-policy-binding \
     --role roles/iam.workloadIdentityUser \
@@ -67,6 +74,10 @@ gcloud iam service-accounts add-iam-policy-binding \
 
 ## Deploy Prometheus and Alertmanager
 
+Deploy prometheus:
+
 ```sh
-make deploy
+make deploy_prometheus
 ```
+
+Deploy Alertmanager
