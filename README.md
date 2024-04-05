@@ -85,3 +85,9 @@ Deploy Alertmanager
 ```sh
 make deploy_alertmanager
 ```
+
+## Cleanup
+
+```sh
+make cleanup
+```
