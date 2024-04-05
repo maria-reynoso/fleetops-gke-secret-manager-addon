@@ -37,6 +37,17 @@ gcloud secrets versions add $SECRET_NAME --data-file=$FILE_NAME
 
 ## Grant access
 
+Create alertmanager service account and bind the IAM service account to the service account
+
+```sh
+kubectl apply -f service-account.yaml
+
+gcloud iam service-accounts add-iam-policy-binding \
+    --role roles/iam.workloadIdentityUser \
+    --member "serviceAccount:jetstack-maria.svc.id.goog[monitoring/alertmanager-secret-sa]" \
+    fleetops@jetstack-maria.iam.gserviceaccount.com
+```
+
 Grant the IAM service account permission to access the secret
 
 To grant the service account permission to access the secret, run the following command:
@@ -61,17 +72,6 @@ Deploy `SecretProviderClass`:
 kubectl apply -f deploy/manifests/app-secrets.yaml
 ```
 
-Create alertmanager service account and bind the IAM service account to the service account
-
-```sh
-kubectl apply -f service-account.yaml
-
-gcloud iam service-accounts add-iam-policy-binding \
-    --role roles/iam.workloadIdentityUser \
-    --member "serviceAccount:jetstack-maria.svc.id.goog[monitoring/alertmanager-secret-sa]" \
-    fleetops@jetstack-maria.iam.gserviceaccount.com
-```
-
 ## Deploy Prometheus and Alertmanager
 
 Deploy prometheus:
@@ -81,3 +81,7 @@ make deploy_prometheus
 ```
 
 Deploy Alertmanager
+
+```sh
+make deploy_alertmanager
+```
