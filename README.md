@@ -80,6 +80,20 @@ Deploy prometheus:
 make deploy_prometheus
 ```
 
+With the help of kubectl port-forwarding, we can directly connect to a pod on a specific port from our workstation to container port. Run following commands to connect to a pod through browser.
+
+```sh
+#to get the pod name, run below command
+kubectl get pods –namespace=monitoring
+NAME                               READY     STATUS    RESTARTS   AGE
+prometheus-monitoring-xxxx   1/1       Running   0          1m
+
+#run below command to open port on 8080
+kubectl port-forward prometheus-monitoring-xxxx 8080:9090 -n monitoring
+```
+
+Now from browser you can access Prometheus console by using url: http://localhost:8080
+
 Deploy Alertmanager
 
 ```sh
