@@ -37,25 +37,14 @@ gcloud secrets versions add $SECRET_NAME --data-file=$FILE_NAME
 
 ## Grant access
 
-Create alertmanager service account and bind the IAM service account to the service account
+Grant the IAM service account permission to access the secret
 
 ```sh
 kubectl apply -f service-account.yaml
 
-gcloud iam service-accounts add-iam-policy-binding \
-    --role roles/iam.workloadIdentityUser \
-    --member "serviceAccount:jetstack-maria.svc.id.goog[monitoring/alertmanager-secret-sa]" \
-    fleetops@jetstack-maria.iam.gserviceaccount.com
-```
-
-Grant the IAM service account permission to access the secret
-
-To grant the service account permission to access the secret, run the following command:
-
-```sh
-gcloud secrets add-iam-policy-binding $SECRET_NAME \
-    --member=serviceAccount:fleetops@jetstack-maria.iam.gserviceaccount.com \
-    --role=roles/secretmanager.secretAccessor
+gcloud projects add-iam-policy-binding jetstack-maria --role=roles/secretmanager.secretAccessor \
+--member=principal://iam.googleapis.com/projects/1234567890/locations/global/workloadIdentityPools/<PROJECT_ID>.svc.id.goog/subject/ns/default/sa/my-ksa \
+--condition=None
 ```
 
 ## Create SecretProviderClass
